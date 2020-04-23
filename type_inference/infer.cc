@@ -2,68 +2,68 @@
 
 #include <boost/type_index.hpp>
 
+#include "type_name.h"
+
 // template type inference
 
-#define REPORT_TYPEID_RUNTIME(x) \
-  std::cout << "Type of " << (#x) << " is " << boost::typeindex::type_id_runtime(x).pretty_name();
-#define REPORT_TYPEID_TEMPLATE(T) \
+#define REPORT_TYPE_TEMPLATE(T) \
   std::cout << "Type of " << (#T) << " is " << boost::typeindex::type_id_with_cvr<T>().pretty_name();
 
 #define REPORT_TYPE_AND_CALL(x, func) \
-  std::cout << "\t"; REPORT_TYPEID_RUNTIME(x); std::cout << ",\t"; func(x);
+  std::cout << "\t"; REPORT_TYPE_RUNTIME(x); std::cout << "\t\t"; func(x);
 
 template <class T>
 void templateFuncWithRefArg(T& x) {
   std::cout << __func__ << "() inferred:\t";
-  REPORT_TYPEID_TEMPLATE(T);
+  REPORT_TYPE_TEMPLATE(T);
   std::cout << std::endl;
 }
 
 template <class T>
 void templateFuncWithConstRefArg(const T& x) {
   std::cout << __func__ << "() inferred:\t";
-  REPORT_TYPEID_TEMPLATE(T);
+  REPORT_TYPE_TEMPLATE(T);
   std::cout << std::endl;
 }
 
 template <class T>
 void templateFuncWithPtrArg(T* x) {
   std::cout << __func__ << "() inferred:\t";
-  REPORT_TYPEID_TEMPLATE(T);
+  REPORT_TYPE_TEMPLATE(T);
   std::cout << std::endl;
 }
 
 template <class T>
 void templateFuncWithConstPtrArg(const T* x) {
   std::cout << __func__ << "() inferred:\t";
-  REPORT_TYPEID_TEMPLATE(T);
+  REPORT_TYPE_TEMPLATE(T);
   std::cout << std::endl;
 }
 
 template <class T>
 void templateFuncWithValArg(const T x) {
   std::cout << __func__ << "() inferred:\t";
-  REPORT_TYPEID_TEMPLATE(T);
+  REPORT_TYPE_TEMPLATE(T);
   std::cout << std::endl;
 }
 
 template <class T>
 void templateFuncWithConstValArg(const T x) {
   std::cout << __func__ << "() inferred:\t";
-  REPORT_TYPEID_TEMPLATE(T);
+  REPORT_TYPE_TEMPLATE(T);
   std::cout << std::endl;
 }
 
 template <class T>
 void templateFuncWithFwdRefArg(T&& x) {
   std::cout << __func__ << "() inferred:\t";
-  REPORT_TYPEID_TEMPLATE(T);
+  REPORT_TYPE_TEMPLATE(T);
   std::cout << std::endl;
 }
 
 void funcWithRValueRefArg(int && x) {
   std::cout << __func__ << "() arg type:\t";
-  REPORT_TYPEID_RUNTIME(x);
+  REPORT_TYPE_RUNTIME(x);
   std::cout << std::endl;
 }
 
@@ -172,7 +172,7 @@ int main() {
   //REPORT_TYPE_AND_CALL(std::move(px), funcWithRValueRefArg);
   // REPORT_TYPE_AND_CALL(cpx, funcWithRValueRefArg);
   //REPORT_TYPE_AND_CALL(std::move(cpx), funcWithRValueRefArg);
-  // REPORT_TYPE_AND_CALL(rx, funcWithRValueRefArg);
+  //REPORT_TYPE_AND_CALL(rx, funcWithRValueRefArg);
   REPORT_TYPE_AND_CALL(std::move(rx), funcWithRValueRefArg);
   // REPORT_TYPE_AND_CALL(crx, funcWithRValueRefArg);
   // REPORT_TYPE_AND_CALL(std::move(crx), funcWithRValueRefArg);
